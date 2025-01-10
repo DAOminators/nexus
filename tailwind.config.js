@@ -13,7 +13,8 @@ module.exports = {
         primary: "#1a8fff",
       },
       fontSize: {
-        'biggie': '17rem',
+        'biggie': '28rem',
+        'smallie': '18rem',
       },
       
       fontFamily: {
