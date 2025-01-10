@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Navigation from "./components/Navigation";
-
+import UploadPaper from "./components/UploadPaper";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
       >
         <main className="w-full mx-auto">
           <Navigation />
+          <UploadPaper />
           {children}
         </main>
       </body>
