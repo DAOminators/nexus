@@ -1,4 +1,8 @@
+'use client'
 import React from 'react'
+import AnimatedText from '../components/AnimatedText'
+import CurrentProjects from '../components/currentProjects'
+import Waddress from './Waddress'
 
 function Dashboard() {
   return (
@@ -14,10 +18,10 @@ function Dashboard() {
               <div className="left-0 h-[90vh] w-line bg-white"></div>
               <p>+</p>
             </div>
-              <div className="flex flex-col items-center justify-between">
-                  <h5 className="font-cyberalert text-5xl text-yellow-500">WALLET ADDRESS</h5>
-                  <p className="text-3xl font-cyberalert">0x1234567890</p>
-              </div>
+            <div className='flex flex-col w-full h-full'>
+              <Waddress />
+              <CurrentProjects />
+            </div>
             <div className='flex flex-col items-center justify-between'>
               <p>+</p>
               <div className="left-full h-[90vh] w-line bg-white"></div>
