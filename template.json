@@ -1,0 +1,5 @@
+{
+    "name": "Chroma - Awwward Winning Next.JS Template",
+    "description": "Chroma is a NextJS template for easy-build aesthetic websites",
+    "defaultFile": "src/app/page.js"
+}  
