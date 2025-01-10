@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 // Page Transitions
 
-// Here's an example
 export default function Template({ children }) {
     useEffect(() => {
         AnimatePageIn();

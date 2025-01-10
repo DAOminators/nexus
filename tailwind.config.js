@@ -10,6 +10,22 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "#1a8fff",
+      },
+      fontSize: {
+        'biggie': '17rem',
+      },
+      
+      fontFamily: {
+        agnes: ['Agnes', 'sans-serif'],
+        alexbrush: ['AlexBrush', 'sans-serif'],
+        budmojiggler: ['BudmoJiggler', 'sans-serif'],
+        helvetica: ['Helvetica', 'sans-serif'],
+        murmure: ['Murmure', 'sans-serif'],
+        pilowlava: ['Pilowlava', 'sans-serif'],
+        typefessobscure: ['Typefesse-Obscure', 'sans-serif'],
+        typefesse: ['Typefesse', 'sans-serif'],
+        abril: ['Abril', 'sans-serif'],
       },
     },
   },

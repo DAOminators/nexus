@@ -4,17 +4,58 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f0f0f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f0f0f;
+    --foreground: #ffffff;
   }
 }
 
 /* FONTS */
+@font-face {
+  font-family: 'Agnes';
+  src: url('/fonts/Agnes-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Abril';
+  src: url('/fonts/ABRILFATFACE-REGULAR.TTF');
+}
+
+@font-face {
+  font-family: 'AlexBrush';
+  src: url('/fonts/AlexBrush-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'BudmoJiggler';
+  src: url('/fonts/BudmoJiggler.otf');
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/HELVETICANOWDISPLAY-REGULAR.OTF');
+}
+
+@font-face {
+  font-family: 'Pilowlava';
+  src: url('/fonts/PILOWLAVA-REGULAR.OTF');
+}
+
+@font-face {
+  font-family: 'Typefesse-Obscure';
+  src: url('/fonts/Typefesse_Claire-Obscure.woff2');
+}
+
+@font-face {
+  font-family: 'Typefesse';
+  src: url('/fonts/Typefesse_Pleine.woff2');
+}
 
 body {
   color: var(--foreground);
