@@ -11,13 +11,18 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: "#1a8fff",
-        secondary: "0f0f0f",
+        secondary: "#0f0f0f",
       },
       fontSize: {
         'biggie': '28rem',
         'smallie': '18rem',
       },
-      
+      height:{
+        'line': '1px',
+      },
+      width:{
+        'line': '1px',
+      },
       fontFamily: {
         agnes: ['Agnes', 'sans-serif'],
         alexbrush: ['AlexBrush', 'sans-serif'],
@@ -28,6 +33,8 @@ module.exports = {
         typefessobscure: ['Typefesse-Obscure', 'sans-serif'],
         typefesse: ['Typefesse', 'sans-serif'],
         abril: ['Abril', 'sans-serif'],
+        sddystopian: ['Sddystopian', 'sans-serif'],
+        cyberalert: ['CyberAlert', 'sans-serif'],
       },
     },
   },

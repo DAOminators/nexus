@@ -28,6 +28,16 @@
 }
 
 @font-face {
+  font-family: 'CyberAlert';
+  src: url('/fonts/cyber-alert.otf');
+}
+
+@font-face {
+  font-family: 'Sddystopian';
+  src: url('/fonts/Sddystopian.otf');
+}
+
+@font-face {
   font-family: 'AlexBrush';
   src: url('/fonts/AlexBrush-Regular.ttf');
 }
