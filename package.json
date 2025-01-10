@@ -17,7 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
-    "ethers": "^6.1",
+    "ethers": "^5",
     "gsap": "^3.12.5",
     "locomotive-scroll": "^5.0.0-beta.21",
     "lucide-react": "^0.470.0",
@@ -32,7 +32,7 @@
     "web3modal": "^1.9.12"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "@types/node": "22.10.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.20",
