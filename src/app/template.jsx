@@ -17,7 +17,7 @@ export default function Template({ children }) {
             ></div>
             <div
                 id="banner-2"
-                className="bg-primary z-10 fixed top-0 left-1/4 w-1/4 min-h-screen"
+                className="bg-yellow-500 z-10 fixed top-0 left-1/4 w-1/4 min-h-screen"
             ></div>
             <div
                 id="banner-3"
@@ -25,7 +25,7 @@ export default function Template({ children }) {
             ></div>
             <div
                 id="banner-4"
-                className="bg-primary z-10 fixed top-0 left-3/4 w-1/4 min-h-screen"
+                className="bg-yellow-500 z-10 fixed top-0 left-3/4 w-1/4 min-h-screen"
             ></div>
             {children}
         </div>
