@@ -5,8 +5,11 @@ import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+gsap.registerPlugin(ScrollTrigger);
 
 function CurvedPlane({ width, height, radius, segments, texturePath }) {
+  // CurvedPlane component remains the same
   const texture = useTexture(texturePath);
 
   const geometry = useMemo(() => {
@@ -41,10 +44,7 @@ function CurvedPlane({ width, height, radius, segments, texturePath }) {
       }
     }
 
-    geometry.setAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(vertices, 3)
-    );
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
     geometry.setIndex(indices);
     geometry.computeVertexNormals();
@@ -53,16 +53,12 @@ function CurvedPlane({ width, height, radius, segments, texturePath }) {
 
   return (
     <mesh geometry={geometry}>
-      <meshStandardMaterial
-        map={texture}
-        side={THREE.DoubleSide}
-        toneMapped={false}
-      />
+      <meshStandardMaterial map={texture} side={THREE.DoubleSide} toneMapped={false} />
     </mesh>
   );
 }
 
-function GalleryBlocks({ images, numVerticalSections, blocksPerSection, verticalSpacing, height }) {
+function GalleryBlocks({ images, numVerticalSections, blocksPerSection, verticalSpacing, height, scrollProgress }) {
   const galleryGroup = useRef();
   const radius = 10;
   const sectionAngle = (Math.PI * 2) / blocksPerSection;
@@ -74,14 +70,14 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
     const heightBuffer = (height - totalBlockHeight) / 2;
     const startY = -height / 2 + heightBuffer + verticalSpacing;
 
-    let imageIndex = 0; // Track image index for cycling
+    let imageIndex = 0;
 
     for (let section = 0; section < numVerticalSections; section++) {
       const baseY = startY + section * verticalSpacing;
       for (let i = 0; i < blocksPerSection; i++) {
         const yOffset = Math.random() * 10 - 0.1;
-        const texturePath = images[imageIndex]; // Use the current image
-        imageIndex = (imageIndex + 1) % images.length; // Cycle through images
+        const texturePath = images[imageIndex];
+        imageIndex = (imageIndex + 1) % images.length;
 
         const baseAngle = section * sectionAngle;
         const randomAngleOffset = (Math.random() * 2 - 1) * maxRandomAngle;
@@ -96,11 +92,12 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
       }
     }
     return blockList;
-  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, radius, images]);
+  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, images]);
 
   useFrame(() => {
     if (galleryGroup.current) {
-      galleryGroup.current.rotation.y += 0.0025; // Base rotation speed
+      galleryGroup.current.rotation.y += 0.0025;
+      galleryGroup.current.position.y = scrollProgress * 15; // Adjust the multiplier to control scroll speed
     }
   });
 
@@ -126,49 +123,70 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
 }
 
 function PaperGallery() {
-  const lenis = useRef(new Lenis({ autoRaf: true }));
-  const scrollRef = useRef();
+  const scrollContainer = useRef();
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+
   const images = useMemo(() => {
-    //image paths here
     return Array.from({ length: 50 }, (_, i) => `/images/papers/${i + 1}.jpg`);
   }, []);
 
   useEffect(() => {
-    gsap.to(scrollRef.current.position, {
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-      },
-      y: 5,
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
     });
-  });
-  
-  
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    const updateScroll = () => {
+      if (scrollContainer.current) {
+        const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+        const current = window.scrollY;
+        setScrollProgress(current / scrollMax);
+      }
+    };
+
+    window.addEventListener('scroll', updateScroll);
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+      lenis.destroy();
+    };
+  }, []);
 
   return (
-    <Canvas
-    ref={scrollRef}
-    id= 'scroll-container'
-      className="absolute top-0 left-0 w-full h-full "
-      camera={{
-        fov: 75,
-        position: [0, 0, 12],
-        near: 0.1,
-        far: 1000,
-      }}
-    >
-      <ambientLight intensity={1} />
-      <GalleryBlocks
-      ref={scrollRef}
-        images={images}
-        numVerticalSections={12}
-        blocksPerSection={4}
-        verticalSpacing={3.25}
-        height={30}
-      />
-    </Canvas>
+    <div ref={scrollContainer} className="h-[300vh] relative">
+      <div className="sticky top-0 h-screen w-full">
+        <Canvas
+          className="absolute top-0 left-0 w-full h-full"
+          camera={{
+            fov: 75,
+            position: [0, 0, 12],
+            near: 0.1,
+            far: 1000,
+          }}
+        >
+          <ambientLight intensity={1} />
+          <GalleryBlocks
+            images={images}
+            numVerticalSections={12}
+            blocksPerSection={4}
+            verticalSpacing={3.25}
+            height={30}
+            scrollProgress={scrollProgress}
+          />
+        </Canvas>
+      </div>
+    </div>
   );
 }
 
