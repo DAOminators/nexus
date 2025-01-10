@@ -1,10 +1,12 @@
 import localFont from 'next/font/local'
 import React from 'react'
+import ErtdfgcvbBG from '../components/ErtdfgcvbBG'
 
 function HOME() {
   return (
     <div>
-      <div className='flex flex-col items-center justify-center h-screen w-screen'>
+          <ErtdfgcvbBG />
+      <div className='flex flex-col items-center justify-center h-screen w-screen z-10'>
           <div className='flex justify-center items-center h-1/2 mb-16'>
             <div className='text-biggie text-white flex items-end '>
               <div className='font-agnes'>n</div>
