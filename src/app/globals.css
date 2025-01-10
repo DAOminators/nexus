@@ -14,6 +14,8 @@
   }
 }
 
+/* FONTS */
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -21,6 +23,7 @@ body {
   
   /* custom cursor */
   /* cursor: url('/assets/cursor.png'), auto; */
+
 
 }
 
