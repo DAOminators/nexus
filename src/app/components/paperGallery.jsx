@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
 
 function CurvedPlane({ width, height, radius, segments, texturePath }) {
   const texture = useTexture(texturePath);
@@ -78,7 +79,7 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
     for (let section = 0; section < numVerticalSections; section++) {
       const baseY = startY + section * verticalSpacing;
       for (let i = 0; i < blocksPerSection; i++) {
-        const yOffset = Math.random() * 0.2 - 0.1;
+        const yOffset = Math.random() * 10 - 0.1;
         const texturePath = images[imageIndex]; // Use the current image
         imageIndex = (imageIndex + 1) % images.length; // Cycle through images
 
@@ -126,27 +127,31 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
 
 function PaperGallery() {
   const lenis = useRef(new Lenis({ autoRaf: true }));
-
+  const scrollRef = useRef();
   const images = useMemo(() => {
-    // Define all image paths here
+    //image paths here
     return Array.from({ length: 50 }, (_, i) => `/images/papers/${i + 1}.jpg`);
   }, []);
 
   useEffect(() => {
-    lenis.current.start();
-    const handleScroll = () => {
-      lenis.current.raf();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    gsap.to(scrollRef.current.position, {
+      scrollTrigger: {
+        trigger: '#scroll-container',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+      },
+      y: 5,
+    });
+  });
+  
+  
 
   return (
     <Canvas
-      className="absolute top-0 left-0 w-full h-full"
+    ref={scrollRef}
+    id= 'scroll-container'
+      className="absolute top-0 left-0 w-full h-full "
       camera={{
         fov: 75,
         position: [0, 0, 12],
@@ -156,6 +161,7 @@ function PaperGallery() {
     >
       <ambientLight intensity={1} />
       <GalleryBlocks
+      ref={scrollRef}
         images={images}
         numVerticalSections={12}
         blocksPerSection={4}
