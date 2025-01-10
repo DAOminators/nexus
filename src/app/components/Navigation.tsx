@@ -17,7 +17,7 @@ const Navigation = () => {
                         <TransitionLink href="/about" label="About" />
                     </li>
                     <li>
-                        <TransitionLink href="/contact" label="Try it Out" />
+                        <TransitionLink href="/dashboard" label="Try it Out" />
                     </li>
                 </ul>
             </nav>
