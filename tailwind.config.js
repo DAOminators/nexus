@@ -11,6 +11,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: "#1a8fff",
+        secondary: "0f0f0f",
       },
       fontSize: {
         'biggie': '28rem',
