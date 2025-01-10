@@ -1,6 +1,6 @@
 'use client';
-import React, { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import React, { useRef, useMemo, useEffect, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import Lenis from '@studio-freight/lenis';
@@ -8,9 +8,23 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 gsap.registerPlugin(ScrollTrigger);
 
-function CurvedPlane({ width, height, radius, segments, texturePath }) {
-  // CurvedPlane component remains the same
-  const texture = useTexture(texturePath);
+// Add this at the top level of your file
+const imageData = [
+  { 
+    path: '/images/papers/1.jpg',
+    link: 'https://example1.com',
+  },
+  { 
+    path: '/images/papers/2.jpg',
+    link: 'https://example2.com',
+  },
+  // ... add more images with their corresponding links
+];
+
+function CurvedPlane({ width, height, radius, segments, imageInfo, onClick }) {
+  const texture = useTexture(imageInfo.path);
+  const [hovered, setHovered] = useState(false);
+  const { camera } = useThree();
 
   const geometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
@@ -52,17 +66,43 @@ function CurvedPlane({ width, height, radius, segments, texturePath }) {
   }, [width, height, radius, segments]);
 
   return (
-    <mesh geometry={geometry}>
-      <meshStandardMaterial map={texture} side={THREE.DoubleSide} toneMapped={false} />
+    <mesh 
+      geometry={geometry}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        setHovered(true);
+        document.body.style.cursor = 'pointer';
+      }}
+      onPointerOut={(e) => {
+        e.stopPropagation();
+        setHovered(false);
+        document.body.style.cursor = 'default';
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick(imageInfo.link);
+      }}
+    >
+      <meshStandardMaterial 
+        map={texture} 
+        side={THREE.DoubleSide} 
+        toneMapped={false}
+        emissive="#ffffff"
+        emissiveIntensity={hovered ? 0.2 : 0}
+      />
     </mesh>
   );
 }
 
-function GalleryBlocks({ images, numVerticalSections, blocksPerSection, verticalSpacing, height, scrollProgress }) {
+function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verticalSpacing, height, scrollProgress }) {
   const galleryGroup = useRef();
   const radius = 10;
   const sectionAngle = (Math.PI * 2) / blocksPerSection;
   const maxRandomAngle = sectionAngle * 0.3;
+
+  const handleImageClick = (link) => {
+    window.open(link, '_blank');
+  };
 
   const blocks = useMemo(() => {
     const blockList = [];
@@ -76,8 +116,8 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
       const baseY = startY + section * verticalSpacing;
       for (let i = 0; i < blocksPerSection; i++) {
         const yOffset = Math.random() * 10 - 0.1;
-        const texturePath = images[imageIndex];
-        imageIndex = (imageIndex + 1) % images.length;
+        const currentImageData = imageData[imageIndex % imageData.length];
+        imageIndex++;
 
         const baseAngle = section * sectionAngle;
         const randomAngleOffset = (Math.random() * 2 - 1) * maxRandomAngle;
@@ -87,23 +127,25 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
           baseY,
           yOffset,
           finalAngle,
-          texturePath,
+          imageInfo: currentImageData,
         });
       }
     }
     return blockList;
-  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, images]);
+  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, imageData]);
 
   useFrame(() => {
     if (galleryGroup.current) {
+      // Base rotation plus scroll-based rotation
       galleryGroup.current.rotation.y += 0.0025;
-      galleryGroup.current.position.y = scrollProgress * 15; // Adjust the multiplier to control scroll speed
+      // Vertical movement based on scroll
+      galleryGroup.current.position.y = scrollProgress * 15 - 20;
     }
   });
 
   return (
     <group ref={galleryGroup}>
-      {blocks.map(({ baseY, yOffset, finalAngle, texturePath }, index) => (
+      {blocks.map(({ baseY, yOffset, finalAngle, imageInfo }, index) => (
         <group
           key={index}
           position={[0, baseY + yOffset, 0]}
@@ -114,7 +156,8 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
             height={3}
             radius={radius}
             segments={10}
-            texturePath={texturePath}
+            imageInfo={imageInfo}
+            onClick={handleImageClick}
           />
         </group>
       ))}
@@ -125,10 +168,6 @@ function GalleryBlocks({ images, numVerticalSections, blocksPerSection, vertical
 function PaperGallery() {
   const scrollContainer = useRef();
   const [scrollProgress, setScrollProgress] = React.useState(0);
-
-  const images = useMemo(() => {
-    return Array.from({ length: 50 }, (_, i) => `/images/papers/${i + 1}.jpg`);
-  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -177,7 +216,7 @@ function PaperGallery() {
         >
           <ambientLight intensity={1} />
           <GalleryBlocks
-            images={images}
+            imageData={imageData}
             numVerticalSections={12}
             blocksPerSection={4}
             verticalSpacing={3.25}
