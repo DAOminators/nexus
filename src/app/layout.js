@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import UploadPaper from "./components/UploadPaper";
 import Page from "./page";
+import { Home } from "lucide-react";
 // import HOME from "./home/page";
 
 const geistSans = localFont({
@@ -28,7 +29,7 @@ export default function RootLayout({ children }) {
       >
         <main className="w-full mx-auto">
           <Page />
-          <UploadPaper />
+          <Home />
           {children}
         </main>
       </body>
