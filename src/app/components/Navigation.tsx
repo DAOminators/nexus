@@ -10,14 +10,14 @@ const Navigation = () => {
         <>
             <nav className="fixed w-full px-2 font-helvetica flex flex-row place-items-center justify-between">
                 <h1>
-                    <TransitionLink href="/home" label="HOME" />
+                    <TransitionLink className="" href="/home" label="HOME" />
                 </h1>
                 <ul className="flex flex-row space-x-5">
                     <li>
-                        <TransitionLink href="/about" label="About" />
+                        <TransitionLink className="" href="/about" label="About" />
                     </li>
                     <li>
-                        <TransitionLink href="/dashboard" label="Try it Out" />
+                        <TransitionLink className="" href="/dashboard" label="Try it Out" />
                     </li>
                 </ul>
             </nav>

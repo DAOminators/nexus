@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       >
         <main className="w-full mx-auto">
           <Page />
-          {/* <UploadPaper /> */}
+          <UploadPaper />
           {children}
         </main>
       </body>
