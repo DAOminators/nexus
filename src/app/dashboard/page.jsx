@@ -7,9 +7,27 @@ import Footer from './footer'
 import Image from 'next/image'
 import TransitionLink from '../components/TransitionLink'
 import TransitionAnimated from '../components/TransitionAnimated'
+import { ProjectProvider, CreateProjectModal, ProjectList } from '../components/ProjectProvider';
+// import getContributorProjects from '../utils/getContributorProjects'
 
 function Dashboard() {
+  // const [projects, setProjects] = useState([]);
+  // const [contributorAddress, setContributorAddress] = useState('');
+  // useEffect(() => {
+  //   if (contributorAddress) {
+  //     const fetchProjects = async () => {
+  //       const teamIds = await getContributorProjects(contributorAddress);
+  //       setProjects(teamIds);
+  //     };
+
+  //     fetchProjects();
+  //   }
+  // }, [contributorAddress]);
+
+
   return (
+    <ProjectProvider>
+
     <div className='m-5'>
         <div className='flex flex-col w-full'>
           <div className="flex items-center">
@@ -27,23 +45,7 @@ function Dashboard() {
               <div className="flex justify-between">
                 <CurrentProjects />
                 <div className="">
-                  <div className="relative cursor-pointer">
-                    <Image
-                      src="/images/hud/button.jpg"
-                      width={300}
-                      height={300}
-                      className='shadow-yellow-500 mix-blend-screen'
-                    />
-                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                      <TransitionAnimated 
-                        href="/home" 
-                        className="text-yellow-500 text-2xl font-sddystopian font-bold" 
-                        label="NEW PROJECT" 
-                        time={1} 
-                        preStyle=""
-                      />
-                    </div>
-                  </div>
+                <CreateProjectModal />
                   <div className="relative cursor-pointer">
                     <Image
                       src="/images/hud/button.jpg"
@@ -97,6 +99,7 @@ function Dashboard() {
           </div>
         </div>
     </div>
+    </ProjectProvider>
   )
 }
 
