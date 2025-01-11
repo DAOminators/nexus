@@ -28,6 +28,9 @@ export default function Footer() {
             <Link href="https://github.com/DAOminators" className="hover:text-ablue transition-colors">
                 Sreeyansh
             </Link>
+ <Link href="https://github.com/DAOminators" className="hover:text-ablue transition-colors">
+                Ankit
+            </Link>
           </div>
           <div className="text-center">
             <p className="text-gray-400">
