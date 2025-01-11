@@ -1,20 +1,76 @@
 {
     "papers": [
-      {
-        "path": "/images/papers/1.jpg",
-        "link": "https://example1.com",
-        "name": "Deep Learning Advances in Computer Vision",
-        "description": "A comprehensive study of recent advances in deep learning architectures for computer vision tasks, focusing on transformer-based models and their applications.",
-        "authors": "John Doe, Jane Smith",
-        "year": "2024"
-      },
-      {
-        "path": "/images/papers/2.jpg",
-        "link": "https://example2.com",
-        "name": "Reinforcement Learning in Robotics",
-        "description": "Novel approaches to robotic control using advanced reinforcement learning techniques, with practical applications in industrial automation.",
-        "authors": "Alice Johnson, Bob Wilson",
-        "year": "2023"
-      }
+        {
+            "path": "/images/papers/1.png",
+            "link": "https://huggingface.co/papers/2501.05441",
+            "name": "The GAN is dead; long live the GAN! A Modern GAN Baseline",
+            "description": "·\n4 authors\n3",
+            "authors": "jamestompkin, kuleshov, Skylion007, Eva1209",
+            "year": "2025"
+        },
+        {
+            "path": "/images/papers/2.png",
+            "link": "https://huggingface.co/papers/2501.05453",
+            "name": "An Empirical Study of Autoregressive Pre-training from Videos",
+            "description": "·\n6 authors\n2",
+            "authors": "Ilija Radosavovic, jitendra1995, yossig, rravishankar, brjathu",
+            "year": "2024"
+        },
+        {
+            "path": "/images/papers/3.png",
+            "link": "https://huggingface.co/papers/2501.04003",
+            "name": "Are VLMs Ready for Autonomous Driving? An Empirical Study from the Reliability, Data, and Metric Perspectives",
+            "description": "·\n8 authors\n2",
+            "authors": "ZwwWayne, Chonghao, THUdyh, ldkong, shaoyuanxie",
+            "year": "2023"
+        },
+        {
+            "path": "/images/papers/4.png",
+            "link": "https://huggingface.co/papers/2501.05032",
+            "name": "Enhancing Human-Like Responses in Large Language Models",
+            "description": "·\n2 authors\n2",
+            "authors": "Q-bert, Weyaxi",
+            "year": "2022"
+        },
+        {
+            "path": "/images/papers/5.png",
+            "link": "https://huggingface.co/papers/2501.03489",
+            "name": "Entropy-Guided Attention for Private LLMs",
+            "description": "·\n2 authors\n4",
+            "authors": "Brandon Reagen, nandan523",
+            "year": "2021"
+        },
+        {
+            "path": "/images/papers/6.png",
+            "link": "https://huggingface.co/papers/2501.05122",
+            "name": "Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model",
+            "description": "·\n7 authors\n2",
+            "authors": "Radu Timofte, Chris Biemann, Carolin Holtermann, Florian Schneider, Gregor",
+            "year": "2025"
+        },
+        {
+            "path": "/images/papers/7.png",
+            "link": "https://huggingface.co/papers/2501.04377",
+            "name": "On Computational Limits and Provably Efficient Criteria of Visual Autoregressive Models: A Fine-Grained Complexity Analysis",
+            "description": "·\n6 authors\n2",
+            "authors": "Yingyu Liang, Xiaoyu Li, Zhenmei, JamesSand, keyekun",
+            "year": "2020"
+        },
+        {
+            "path": "/images/papers/8.png",
+            "link": "https://huggingface.co/papers/2501.05040",
+            "name": "SWE-Fixer: Training Open-Source LLMs for Effective and Efficient GitHub Issue Resolution",
+            "description": "·\n7 authors\n2",
+            "authors": "Wai Lam, He Du, changgy, bowenli, yitianlian",
+            "year": "2023"
+        },
+        {
+            "path": "/images/papers/9.png",
+            "link": "https://huggingface.co/papers/2501.04828",
+            "name": "Building Foundations for Natural Language Processing of Historical Turkish: Resources and Models",
+            "description": "·\n7 authors\n2",
+            "authors": "Ece Elif Adak, tcTHEBESTMAN, fatihburakkaragoz, temretiras, sbozates",
+            "year": "2024"
+        }
     ]
-  }
+}
