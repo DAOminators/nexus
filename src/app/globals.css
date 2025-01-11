@@ -28,6 +28,11 @@
 }
 
 @font-face {
+  font-family: 'Murmure';
+  src: url('/fonts/LeMurmure-Regular.woff2');
+}
+
+@font-face {
   font-family: 'CyberAlert';
   src: url('/fonts/cyber-alert.otf');
 }

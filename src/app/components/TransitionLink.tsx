@@ -7,9 +7,10 @@ import Link, {LinkProps} from "next/link.js";
 interface TransitionLinkProps extends LinkProps {
     href: string;
     label: string;
+    className: string;
 }
 
-const TransitionLink = ({ href, label, ...props }: TransitionLinkProps) => {
+const TransitionLinkno = ({ href, label, className, ...props }: TransitionLinkProps) => {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -21,7 +22,7 @@ const TransitionLink = ({ href, label, ...props }: TransitionLinkProps) => {
 
     return (
         <button
-            className="text-xl text-white hover:text-neutral-700"
+            className={`z-50 ${className}`}            
             onClick={handleClick}
         >
             {label}
@@ -29,4 +30,4 @@ const TransitionLink = ({ href, label, ...props }: TransitionLinkProps) => {
     );
 };
 
-export default TransitionLink;
+export default TransitionLinkno;
