@@ -1,0 +1,20 @@
+{
+    "papers": [
+      {
+        "path": "/images/papers/1.jpg",
+        "link": "https://example1.com",
+        "name": "Deep Learning Advances in Computer Vision",
+        "description": "A comprehensive study of recent advances in deep learning architectures for computer vision tasks, focusing on transformer-based models and their applications.",
+        "authors": "John Doe, Jane Smith",
+        "year": "2024"
+      },
+      {
+        "path": "/images/papers/2.jpg",
+        "link": "https://example2.com",
+        "name": "Reinforcement Learning in Robotics",
+        "description": "Novel approaches to robotic control using advanced reinforcement learning techniques, with practical applications in industrial automation.",
+        "authors": "Alice Johnson, Bob Wilson",
+        "year": "2023"
+      }
+    ]
+  }

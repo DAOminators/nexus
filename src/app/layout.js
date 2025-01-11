@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import UploadPaper from "./components/UploadPaper";
-import page from "./page";
 import Page from "./page";
+import HOME from "./home/page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

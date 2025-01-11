@@ -36,7 +36,7 @@ function HOME() {
       <ErtdfgcvbBG />
       <div className='flex flex-col items-center justify-center h-screen w-screen z-1'>
         <div className='flex justify-center items-center h-1/2 mb-16'>
-          <div className='text-biggie text-white flex items-end mix-blend-difference'>
+          <div className='text-biggie text-white flex items-end mix-blend-difference z-50'>
             <div className='font-agnes'>n</div>
             <div className='font-alexbrush text-yellow-500'>e</div>
             <div className='text-smallie font-pilowlava text-yellow-500'>X</div>

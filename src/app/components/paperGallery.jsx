@@ -8,23 +8,49 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 gsap.registerPlugin(ScrollTrigger);
 
-// Add this at the top level of your file
-const imageData = [
-  { 
-    path: '/images/papers/1.jpg',
-    link: 'https://example1.com',
-  },
-  { 
-    path: '/images/papers/2.jpg',
-    link: 'https://example2.com',
-  },
-  // ... add more images with their corresponding links
-];
+// Create a separate papers.json file with this structure:
+/*
+{
+  "papers": [
+    {
+      "path": "/images/papers/1.jpg",
+      "link": "https://example1.com",
+      "name": "Deep Learning Advances",
+      "description": "A comprehensive study of recent advances in deep learning architectures",
+      "authors": "John Doe, Jane Smith",
+      "year": "2024"
+    },
+    // ... more papers
+  ]
+}
+*/
 
-function CurvedPlane({ width, height, radius, segments, imageInfo, onClick }) {
+// Tooltip component with enhanced styling
+function Tooltip({ paperInfo, position }) {
+  if (!paperInfo || !position) return null;
+  
+  return (
+    <div 
+      className="fixed z-50 p-4 bg-black/90 text-white rounded-lg pointer-events-none transform -translate-x-1/2 -translate-y-full"
+      style={{ 
+        left: position.x, 
+        top: position.y - 20,
+        maxWidth: '400px',
+        backdropFilter: 'blur(5px)'
+      }}
+    >
+      <h3 className="font-bold text-base mb-1">{paperInfo.name}</h3>
+      <p className="text-sm text-gray-300 mb-1">{paperInfo.authors} ({paperInfo.year})</p>
+      <p className="text-sm text-gray-400">{paperInfo.description}</p>
+    </div>
+  );
+}
+
+function CurvedPlane({ width, height, radius, segments, imageInfo, onClick, onHover }) {
   const texture = useTexture(imageInfo.path);
   const [hovered, setHovered] = useState(false);
   const { camera } = useThree();
+  const meshRef = useRef();
 
   const geometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
@@ -65,19 +91,34 @@ function CurvedPlane({ width, height, radius, segments, imageInfo, onClick }) {
     return geometry;
   }, [width, height, radius, segments]);
 
+  const handlePointerMove = (event) => {
+    if (hovered) {
+      event.stopPropagation();
+      onHover({
+        show: true,
+        paperInfo: imageInfo,
+        position: { x: event.clientX, y: event.clientY }
+      });
+    }
+  };
+
   return (
     <mesh 
+      ref={meshRef}
       geometry={geometry}
       onPointerOver={(e) => {
         e.stopPropagation();
         setHovered(true);
         document.body.style.cursor = 'pointer';
+        handlePointerMove(e);
       }}
       onPointerOut={(e) => {
         e.stopPropagation();
         setHovered(false);
         document.body.style.cursor = 'default';
+        onHover({ show: false });
       }}
+      onPointerMove={handlePointerMove}
       onClick={(e) => {
         e.stopPropagation();
         onClick(imageInfo.link);
@@ -94,7 +135,7 @@ function CurvedPlane({ width, height, radius, segments, imageInfo, onClick }) {
   );
 }
 
-function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verticalSpacing, height, scrollProgress }) {
+function GalleryBlocks({ papers, numVerticalSections, blocksPerSection, verticalSpacing, height, scrollProgress, onHover }) {
   const galleryGroup = useRef();
   const radius = 10;
   const sectionAngle = (Math.PI * 2) / blocksPerSection;
@@ -110,14 +151,14 @@ function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verti
     const heightBuffer = (height - totalBlockHeight) / 2;
     const startY = -height / 2 + heightBuffer + verticalSpacing;
 
-    let imageIndex = 0;
+    let paperIndex = 0;
 
     for (let section = 0; section < numVerticalSections; section++) {
       const baseY = startY + section * verticalSpacing;
       for (let i = 0; i < blocksPerSection; i++) {
         const yOffset = Math.random() * 10 - 0.1;
-        const currentImageData = imageData[imageIndex % imageData.length];
-        imageIndex++;
+        const currentPaper = papers[paperIndex % papers.length];
+        paperIndex++;
 
         const baseAngle = section * sectionAngle;
         const randomAngleOffset = (Math.random() * 2 - 1) * maxRandomAngle;
@@ -127,19 +168,17 @@ function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verti
           baseY,
           yOffset,
           finalAngle,
-          imageInfo: currentImageData,
+          imageInfo: currentPaper,
         });
       }
     }
     return blockList;
-  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, imageData]);
+  }, [numVerticalSections, blocksPerSection, verticalSpacing, height, papers]);
 
   useFrame(() => {
     if (galleryGroup.current) {
-      // Base rotation plus scroll-based rotation
-      galleryGroup.current.rotation.y += 0.0025;
-      // Vertical movement based on scroll
-      galleryGroup.current.position.y = scrollProgress * 15 - 20;
+      galleryGroup.current.rotation.y = 0.0025 + scrollProgress * Math.PI * 2;
+      galleryGroup.current.position.y = scrollProgress * 15;
     }
   });
 
@@ -158,6 +197,7 @@ function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verti
             segments={10}
             imageInfo={imageInfo}
             onClick={handleImageClick}
+            onHover={onHover}
           />
         </group>
       ))}
@@ -167,9 +207,17 @@ function GalleryBlocks({ imageData, numVerticalSections, blocksPerSection, verti
 
 function PaperGallery() {
   const scrollContainer = useRef();
-  const [scrollProgress, setScrollProgress] = React.useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [tooltip, setTooltip] = useState({ show: false, paperInfo: null, position: null });
+  const [papers, setPapers] = useState([]);
 
   useEffect(() => {
+    // Fetch papers data from JSON file
+    fetch('/data/papers.json')
+      .then(response => response.json())
+      .then(data => setPapers(data.papers))
+      .catch(error => console.error('Error loading papers:', error));
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -202,6 +250,10 @@ function PaperGallery() {
     };
   }, []);
 
+  if (papers.length === 0) {
+    return <div className="h-screen flex items-center justify-center">Loading papers...</div>;
+  }
+
   return (
     <div ref={scrollContainer} className="h-[300vh] relative">
       <div className="sticky top-0 h-screen w-full">
@@ -216,14 +268,16 @@ function PaperGallery() {
         >
           <ambientLight intensity={1} />
           <GalleryBlocks
-            imageData={imageData}
+            papers={papers}
             numVerticalSections={12}
             blocksPerSection={4}
             verticalSpacing={3.25}
             height={30}
             scrollProgress={scrollProgress}
+            onHover={setTooltip}
           />
         </Canvas>
+        {tooltip.show && <Tooltip paperInfo={tooltip.paperInfo} position={tooltip.position} />}
       </div>
     </div>
   );
