@@ -1,20 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Nexus Research DAO
+![alt text](<Screenshot 2025-01-11 103631.png>)
+We built a Research DAO that changes how people collaborate on research. It’s simple, secure, and fair.
 
-## Getting Started
+In our platform, anyone can contribute to research without fear of being exposed, sabotaged, or having their ideas stolen. A monorepo keeps everything organized and tracks contributions transparently, while identities stay private.
 
-First, run the development server:
+When the research is complete, it’s turned into an NFT—a digital badge of ownership. Contributors get credit and can sell their work or earn from it, all without middlemen.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+We’ve created a space where research is open, safe, and rewarding. A world where ideas thrive, and the people behind them get what they deserve.
 
-What lives where?
+Join us and be part of the future of research. 
 
-Smooth Scroll -> `page.js`
-Page Animations -> `template.jsx` and `utils>animation.js`
+### Technology Stack:
+Frontend:
+- NEXT.js
+- Tailwind CSS
+- GSAP
+- Three.js
+- Locomotive-scroll
+- Luicide
+- Lenis
+
+Web3 and Backend:
+- SandBox
+- Docker
+- Solidity
+- Hardhat
+- Ethers.js
+- IPFS
+- Remix IDE
+- Pinata
+
+### Team:
+- [Ankit Prasad](https://www.github.com/ankitprasad2005)
+- [Preetham Pemmasani](https://www.github.com/ppmpreetham)
+- [Biresh Biswas](https://www.github.com/Billa05)
+- [Sreeyansh Dhenevahi](https://www.github.com/sreeyanshyolo262)
+- [Subhrojyoti Sen](https://www.github.com/concprog)

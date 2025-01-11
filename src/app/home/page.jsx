@@ -14,14 +14,11 @@ TransitionLink
 function HOME() {
   return (
     <div>
-      <nav className="z-50 mix-blend-difference fixed w-full px-2 font-helvetica flex flex-row place-items-center justify-between">
+      <nav className="z-50 mix-blend-difference fixed w-full px-2 font-helvetica flex flex-row place-items-center justify-between text-3xl">
         <h1>
             <TransitionLink href="/home" label="HOME" />
         </h1>
-        <ul className="flex flex-row space-x-5">
-            <li>
-                <TransitionLink href="/about" label="About" />
-            </li>
+        <ul className="flex flex-row text-3xl space-x-5">
             <li>
                 <TransitionLink href="/dashboard" label="Try it Out" />
             </li>
