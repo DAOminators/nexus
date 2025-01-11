@@ -11,6 +11,7 @@ contract ResearchDAO {
         string name;
         address leader;
         address[] members;
+        string readmeLink; // To store the readme (research paper) link
     }
 
     struct Idea {
@@ -56,12 +57,13 @@ contract ResearchDAO {
     }
 
     // 1️⃣ Create a Team
-    function createTeam(string memory _name) external {
+    function createTeam(string memory _name, string memory _readmeLink) external {
         Team storage newTeam = teams[teamCount];
         newTeam.id = teamCount;
         newTeam.name = _name;
         newTeam.leader = msg.sender;
         newTeam.members.push(msg.sender);
+        newTeam.readmeLink = _readmeLink; // Save the research paper link
 
         emit TeamCreated(teamCount, _name, msg.sender);
         teamCount++;
@@ -152,9 +154,37 @@ contract ResearchDAO {
         Idea storage idea = ideas[_ideaId];
         return (idea.description, idea.approved, idea.deadline, idea.codeAccessLink);
     }
+
+    // Get all projects (teams) a contributor is part of
+    function getContributorProjects(address contributor) external view returns (uint256[] memory) {
+        uint256[] memory userProjects = new uint256[](teamCount); // Max possible projects
+        uint256 count = 0;
+
+        for (uint256 i = 0; i < teamCount; i++) {
+            for (uint256 j = 0; j < teams[i].members.length; j++) {
+                if (teams[i].members[j] == contributor) {
+                    userProjects[count] = i;
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        // Resize the array to fit the number of projects the contributor is part of
+        uint256[] memory finalProjects = new uint256[](count);
+        for (uint256 i = 0; i < count; i++) {
+            finalProjects[i] = userProjects[i];
+        }
+        return finalProjects;
+    }
+
+    // Get project details (including readme link) by team ID
+    function getProjectDetails(uint256 _teamId) external view returns (string memory name, address leader, string memory readmeLink, address[] memory members) {
+        Team storage team = teams[_teamId];
+        return (team.name, team.leader, team.readmeLink, team.members);
+    }
+
     function getTeamMemberCount(uint256 _teamId) external view returns (uint256) {
-    return teams[_teamId].members.length;
+        return teams[_teamId].members.length;
+    }
 }
-
-}
-
