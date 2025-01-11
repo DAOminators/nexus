@@ -1,5 +1,8 @@
 ## Nexus Research DAO
 ![alt text](./public/images/cover.png)
+Collaborate Securely, Own Completely, Profit Fairly
+
+### About Nexus
 We built a Research DAO that changes how people collaborate on research. It’s simple, secure, and fair.
 
 In our platform, anyone can contribute to research without fear of being exposed, sabotaged, or having their ideas stolen. A monorepo keeps everything organized and tracks contributions transparently, while identities stay private.
