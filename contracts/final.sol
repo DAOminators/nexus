@@ -329,8 +329,15 @@ contract GigaRepo {
         return committers[addr];
     }
 
+    function getAllRefs() external view returns (string[] memory) {
+    return refKeys;
+}
+
+
 
 }
+
+    
 
 
 // Structure 
